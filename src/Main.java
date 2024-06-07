@@ -8,7 +8,7 @@ public class Main {
 
         game.startGame();
         game.printField();
-        game.gameGame();
+        game.shipsField();
 
 
     }

@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class Game {
 
     String[][] gameField = new String[11][11];
-    PlayerShips playerships = PlayerShips.AIRCRAFTCARRIER;
 
 
     public void startGame() {
@@ -33,19 +32,6 @@ public class Game {
 
     }
 
-    public boolean ControlField() {
-        boolean control = true;
-        for(int i = 0; i < gameField.length; i++) {
-            for (int j = 0; j < gameField[i].length; j++) {
-                if ("O".equals(gameField[i][j])) {
-                    control = false;
-                }
-            }
-        }
-        return control;
-
-    }
-
 
     public int AJNum(String value) {
         int num1;
@@ -58,108 +44,155 @@ public class Game {
     }
 
 
-
-    public void gameGame() {
+    public void shipsField() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the coordinates of the ship:");
-        boolean control_AJ_NUM = false;
-
-        while (control_AJ_NUM == false) {
+        System.out.println("Enter the coordinates of the Aircraft Carrier (5 cells):");
+        while (true) {
             String[] value = input.nextLine().split(" ");
             int num1 = AJNum(value[0]);
             int num2 = AJNum(value[1]);
             int AJ1 = (value[0].charAt(0) - 64);
             int AJ2 = (value[1].charAt(0) - 64);
-
-            if ((num1 <= 10 && num1 >= 1) && (num2 <= 10 && num2 >= 1) && (AJ1 <= 10 && AJ1 >= 1) && (AJ2 <= 10 && AJ2 >= 1)){
-                if ((num1 != num2 && AJ1 == AJ2) || ((num1 == num2 && AJ1 != AJ2))) {
-                    control_AJ_NUM = true;
-                }
-            }
-            if (control_AJ_NUM == false) {
-                System.out.println("Error!");
+            if (countShips(AJ1, num1, AJ2, num2) == 5 && plaeyerBoolean(AJ1, num1, AJ2, num2)) {
+                playerField(AJ1, num1, AJ2, num2);
                 break;
-            } else {
-                if (ControlField()) {
-                    playerField(AJ1, num1, AJ2, num2);
-                } else {
-                    System.out.println("Error! You placed it too close to another one. Try again:");
-                }
-
+            }
+        }
+        System.out.println("Enter the coordinates of the Battleship (4 cells):");
+        while (true) {
+            System.out.println("AIR");
+            String[] value = input.nextLine().split(" ");
+            int num1 = AJNum(value[0]);
+            int num2 = AJNum(value[1]);
+            int AJ1 = (value[0].charAt(0) - 64);
+            int AJ2 = (value[1].charAt(0) - 64);
+            if (countShips(AJ1, num1, AJ2, num2) == 4 && plaeyerBoolean(AJ1, num1, AJ2, num2)) {
+                playerField(AJ1, num1, AJ2, num2);
+                break;
+            }
+        }
+        System.out.println("Enter the coordinates of the Submarine (3 cells):");
+        while (true) {
+            System.out.println("AIR");
+            String[] value = input.nextLine().split(" ");
+            int num1 = AJNum(value[0]);
+            int num2 = AJNum(value[1]);
+            int AJ1 = (value[0].charAt(0) - 64);
+            int AJ2 = (value[1].charAt(0) - 64);
+            if (countShips(AJ1, num1, AJ2, num2) == 3 && plaeyerBoolean(AJ1, num1, AJ2, num2)) {
+                playerField(AJ1, num1, AJ2, num2);
+                break;
+            }
+        }
+        System.out.println("Enter the coordinates of the Cruiser (3 cells):");
+        while (true) {
+            String[] value = input.nextLine().split(" ");
+            int num1 = AJNum(value[0]);
+            int num2 = AJNum(value[1]);
+            int AJ1 = (value[0].charAt(0) - 64);
+            int AJ2 = (value[1].charAt(0) - 64);
+            if (countShips(AJ1, num1, AJ2, num2) == 3 && plaeyerBoolean(AJ1, num1, AJ2, num2)) {
+                playerField(AJ1, num1, AJ2, num2);
+                break;
+            }
+        }
+        System.out.println("Enter the coordinates of the Destroyer (2 cells):");
+        while (true) {
+            System.out.println("AIR");
+            String[] value = input.nextLine().split(" ");
+            int num1 = AJNum(value[0]);
+            int num2 = AJNum(value[1]);
+            int AJ1 = (value[0].charAt(0) - 64);
+            int AJ2 = (value[1].charAt(0) - 64);
+            if (countShips(AJ1, num1, AJ2, num2) == 2 && plaeyerBoolean(AJ1, num1, AJ2, num2)) {
+                playerField(AJ1, num1, AJ2, num2);
+                break;
             }
         }
     }
 
-    public enum PlayerShips {
 
-        AIRCRAFTCARRIER(5),
-        BATTLESHIPS(4),
-        SUBMARINE(3),
-        CRUISERISALSO(3),
-        DESTROYER(2);
-
-        int size;
-        PlayerShips (int size) {
-            this.size = size;
+    boolean plaeyerBoolean(int AJ1, int num1, int AJ2, int num2) {
+        boolean control_AJ_NUM = false;
+        if ((num1 <= 10 && num1 >= 1) && (num2 <= 10 && num2 >= 1) && (AJ1 <= 10 && AJ1 >= 1) && (AJ2 <= 10 && AJ2 >= 1)){
+            if ((num1 != num2 && AJ1 == AJ2) || ((num1 == num2 && AJ1 != AJ2))) {
+                control_AJ_NUM = true;
+            }
         }
-
-        public int getSize() {
-            return size;
-        }
+        return control_AJ_NUM;
     }
+
+//    public void gameGame(String name) {
+//
+//        System.out.println("Enter the coordinates of the ship:");
+//        boolean control_AJ_NUM = false;
+//
+//        while (control_AJ_NUM == false) {
+//
+//            if (control_AJ_NUM == false) {
+//                System.out.println("Error!");
+//                break;
+//            } else {
+//                playerField(AJ1, num1, AJ2, num2);
+//            }
+//        }
+//    }
+
+
 
     public void playerField(int AJ1, int NUM1, int AJ2, int NUM2) {
         int count = 0;
         String parts = "";
         if (NUM1 < NUM2 && AJ1 == AJ2) {
             for (int i = NUM1; i <= NUM2; i++) {
-                this.gameField[AJ1][i] = "O";
+                this.gameField[AJ1][i] = "X";
                 parts += "" + ((char)(AJ1 + 64)) + i + " ";
                 count++;
             }
         } else if (NUM1 > NUM2 && AJ1 == AJ2) {
             for (int i = NUM1; i >= NUM2; i--) {
-                this.gameField[AJ1][i] = "O";
+                this.gameField[AJ1][i] = "X";
                 parts += "" + ((char)(AJ1 + 64)) + i + " ";
                 count++;
             }
         } else if (AJ1 < AJ2 && NUM1 == NUM2) {
             for (int i = AJ1; i <= AJ2; i++) {
-                this.gameField[i][NUM1] = "O";
+                this.gameField[i][NUM1] = "X";
                 parts += "" + ((char)(AJ1 + 63 + i)) + NUM1 + " ";
                 count++;
             }
 
         } else if (AJ1 > AJ2 && NUM1 == NUM2) {
             for (int i = AJ1; i >= AJ2; i--) {
-                this.gameField[i][NUM1] = "O";
+                this.gameField[i][NUM1] = "X";
                 parts += "" + ((char) (AJ1 + 58 + i)) + NUM1 + " ";
                 count++;
             }
         }
-        printField();
-        //System.out.println(String.format("Length: %d", count));
-        //System.out.println(String.format("Parts: %s", parts));
+
     }
 
-    public void playerships() {
 
-        switch (playerships) {
-            case AIRCRAFTCARRIER:
-                System.out.println("Enter the coordinates of the Aircraft Carrier (5 cells):");
-
+    public int countShips(int AJ1, int NUM1, int AJ2, int NUM2) {
+        int count = 0;
+        if (NUM1 < NUM2 && AJ1 == AJ2) {
+            for (int i = NUM1; i <= NUM2; i++) {
+                count++;
+            }
+        } else if (NUM1 > NUM2 && AJ1 == AJ2) {
+            for (int i = NUM1; i >= NUM2; i--) {
+                count++;
+            }
+        } else if (AJ1 < AJ2 && NUM1 == NUM2) {
+            for (int i = AJ1; i <= AJ2; i++) {
+                count++;
+            }
+        } else if (AJ1 > AJ2 && NUM1 == NUM2) {
+            for (int i = AJ1; i >= AJ2; i--) {
+                count++;
+            }
         }
-    }
-
-    public boolean playerControlField(int AJ1, int AJ2, int num1, int num2) {
-        boolean control = false;
-        switch (playerships) {
-            case AIRCRAFTCARRIER:
-                if ((Math.abs(AJ1 - AJ2) + 2 == 5) || (Math.abs(num1 - num2) + 2 == 5) ) {
-                    control = true;
-                }
-
-        }
+        return count;
     }
 
 
