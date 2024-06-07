@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Game {
 
     String[][] gameField = new String[11][11];
+    PlayerShips playerships = PlayerShips.AIRCRAFTCARRIER;
 
 
     public void startGame() {
@@ -29,6 +30,19 @@ public class Game {
             }
             System.out.println();
         }
+
+    }
+
+    public boolean ControlField() {
+        boolean control = true;
+        for(int i = 0; i < gameField.length; i++) {
+            for (int j = 0; j < gameField[i].length; j++) {
+                if ("O".equals(gameField[i][j])) {
+                    control = false;
+                }
+            }
+        }
+        return control;
 
     }
 
@@ -66,44 +80,86 @@ public class Game {
                 System.out.println("Error!");
                 break;
             } else {
-                playerField(AJ1, num1, AJ2, num2);
+                if (ControlField()) {
+                    playerField(AJ1, num1, AJ2, num2);
+                } else {
+                    System.out.println("Error! You placed it too close to another one. Try again:");
+                }
+
             }
         }
     }
 
+    public enum PlayerShips {
+
+        AIRCRAFTCARRIER(5),
+        BATTLESHIPS(4),
+        SUBMARINE(3),
+        CRUISERISALSO(3),
+        DESTROYER(2);
+
+        int size;
+        PlayerShips (int size) {
+            this.size = size;
+        }
+
+        public int getSize() {
+            return size;
+        }
+    }
 
     public void playerField(int AJ1, int NUM1, int AJ2, int NUM2) {
         int count = 0;
         String parts = "";
         if (NUM1 < NUM2 && AJ1 == AJ2) {
             for (int i = NUM1; i <= NUM2; i++) {
-                this.gameField[AJ1][i] = "X";
+                this.gameField[AJ1][i] = "O";
                 parts += "" + ((char)(AJ1 + 64)) + i + " ";
                 count++;
             }
         } else if (NUM1 > NUM2 && AJ1 == AJ2) {
             for (int i = NUM1; i >= NUM2; i--) {
-                this.gameField[AJ1][i] = "X";
+                this.gameField[AJ1][i] = "O";
                 parts += "" + ((char)(AJ1 + 64)) + i + " ";
                 count++;
             }
         } else if (AJ1 < AJ2 && NUM1 == NUM2) {
             for (int i = AJ1; i <= AJ2; i++) {
-                this.gameField[i][NUM1] = "X";
+                this.gameField[i][NUM1] = "O";
                 parts += "" + ((char)(AJ1 + 63 + i)) + NUM1 + " ";
                 count++;
             }
 
         } else if (AJ1 > AJ2 && NUM1 == NUM2) {
             for (int i = AJ1; i >= AJ2; i--) {
-                this.gameField[i][NUM1] = "X";
+                this.gameField[i][NUM1] = "O";
                 parts += "" + ((char) (AJ1 + 58 + i)) + NUM1 + " ";
                 count++;
             }
         }
         printField();
-        System.out.println(String.format("Length: %d", count));
-        System.out.println(String.format("Parts: %s", parts));
+        //System.out.println(String.format("Length: %d", count));
+        //System.out.println(String.format("Parts: %s", parts));
+    }
+
+    public void playerships() {
+
+        switch (playerships) {
+            case AIRCRAFTCARRIER:
+                System.out.println("Enter the coordinates of the Aircraft Carrier (5 cells):");
+
+        }
+    }
+
+    public boolean playerControlField(int AJ1, int AJ2, int num1, int num2) {
+        boolean control = false;
+        switch (playerships) {
+            case AIRCRAFTCARRIER:
+                if ((Math.abs(AJ1 - AJ2) + 2 == 5) || (Math.abs(num1 - num2) + 2 == 5) ) {
+                    control = true;
+                }
+
+        }
     }
 
 
