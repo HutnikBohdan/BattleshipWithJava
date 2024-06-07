@@ -32,32 +32,43 @@ public class Game {
 
     }
 
+
+    public int AJNum(String value) {
+        int num1;
+        try {
+            num1 = Integer.parseInt("" + value.charAt(1) + value.charAt(2));
+        } catch (Exception e) {
+            num1 = Integer.parseInt("" + value.charAt(1));
+        }
+        return num1;
+    }
+
+
+
     public void gameGame() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the coordinates of the ship:");
-        boolean LoopAJ = false;
-        boolean LoopNUM = false;
-        while (LoopAJ == false || LoopNUM == false) {
-            String value = input.nextLine();
-            int AJ1 = (value.charAt(0) - 64);
-            int AJ2 = (value.charAt(3) - 64);
-            int num1 = value.charAt(1) - 48;
-            int num2 = value.charAt(4) - 48;
-            if (AJ1 <= 10 && AJ1 >= 1 && AJ2 <= 10 && AJ2 >= 1 || (AJ1 != AJ2 && num1 == num2)) {
-                LoopAJ = true;
+        boolean control_AJ_NUM = false;
+
+        while (control_AJ_NUM == false) {
+            String[] value = input.nextLine().split(" ");
+            int num1 = AJNum(value[0]);
+            int num2 = AJNum(value[1]);
+            int AJ1 = (value[0].charAt(0) - 64);
+            int AJ2 = (value[1].charAt(0) - 64);
+
+            if ((num1 <= 10 && num1 >= 1) && (num2 <= 10 && num2 >= 1) && (AJ1 <= 10 && AJ1 >= 1) && (AJ2 <= 10 && AJ2 >= 1)){
+                if ((num1 != num2 && AJ1 == AJ2) || ((num1 == num2 && AJ1 != AJ2))) {
+                    control_AJ_NUM = true;
+                }
             }
-            if (num1 != num2 && num1 <= 10 && num1 >= 1 && num2 <= 10 && num2 >= 1 || (AJ1 != AJ2 && num1 == num2)) {
-                LoopNUM = true;
-            }
-            if (LoopAJ == false || LoopNUM == false) {
+            if (control_AJ_NUM == false) {
                 System.out.println("Error!");
                 break;
             } else {
                 playerField(AJ1, num1, AJ2, num2);
             }
         }
-
-
     }
 
 
@@ -94,4 +105,6 @@ public class Game {
         System.out.println(String.format("Length: %d", count));
         System.out.println(String.format("Parts: %s", parts));
     }
+
+
 }
